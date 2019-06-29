@@ -56,3 +56,25 @@ target_link_libraries(Tutorial ${EXTRA_LIBS})
 install (TARGETS Tutorial DESTINATION bin)
 install (FILES "${PROJECT_BINARY_DIR}/include/TutorialConfig.h"
          DESTINATION include)
+
+# test
+# test: does the application run
+add_test(Tutorial Tutorial 25)
+
+# test: does it sqrt of 25
+add_test(TutorialComp25 Tutorial 25)
+set_tests_properties(TutorialComp25 PROPERTIES PASS_REGULAR_EXPRESSION "The square root of 25 is 5")
+
+# test: does it handle negative numbers
+add_test(TutorialNegative Tutorial -25)
+set_tests_properties(TutorialNegative PROPERTIES PASS_REGULAR_EXPRESSION "The square root of -25 is 0")
+
+# test: does it handle small numbers
+add_test(TutorialSmall Tutorial 0.0001)
+set_tests_properties(TutorialSmall PROPERTIES PASS_REGULAR_EXPRESSION "The square root of 0.0001 is 0.01")
+
+# test: does the usage message work?
+add_test(TutorialUsage Tutorial)
+set_tests_properties(TutorialUsage PROPERTIES PASS_REGULAR_EXPRESSION "Usage:.*")
+
+enable_testing()
