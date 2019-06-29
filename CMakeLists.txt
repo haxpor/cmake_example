@@ -5,8 +5,17 @@ endif()
 cmake_minimum_required(VERSION 2.6)
 project (Tutorial)
 
+include(CheckSymbolExists)
+
 # add an option to either use our MathFunctions or standard functions from math.h
 option(USE_MYMATH "Use our own implementation of math functions" OFF)
+
+if (USE_MYMATH)
+  # check if certain functions exist, so we will adapt usage of functions
+  set(CMAKE_REQUIRED_LIBRARIES "m")
+  check_symbol_exists(log "math.h" HAVE_LOG)
+  check_symbol_exists(exp "math.h" HAVE_EXP)
+endif (USE_MYMATH)
 
 # version number
 set (Tutorial_VERSION_MAJOR 1)
