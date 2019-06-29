@@ -23,10 +23,8 @@ int main(int argc, char *argv[])
   double input_value = atof(argv[1]);
 #ifdef USE_MYMATH
   double output_value = mysqrt(input_value);
-  fprintf(stdout, "Use MyFunctions\n");
 #else
   double output_value = sqrt(input_value);
-  fprintf(stdout, "Use math.h\n");
 #endif
 
   fprintf(stdout, "The square root of %g is %g\n", input_value, output_value);
