@@ -7,3 +7,7 @@ file (GLOB SOURCE_FILES
   ${PROJECT_SOURCE_DIR}/src/MathFunctions.cpp)
 
 add_library(MathFunctions SHARED ${SOURCE_FILES})
+
+# add the install targets
+install (TARGETS MathFunctions DESTINATION lib)
+install (FILES include/MathFunctions.h DESTINATION include)

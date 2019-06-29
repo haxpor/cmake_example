@@ -51,3 +51,8 @@ endif (USE_MYMATH)
 # build executable
 add_executable(Tutorial src/tutorial.cpp)
 target_link_libraries(Tutorial ${EXTRA_LIBS})
+
+# install targets
+install (TARGETS Tutorial DESTINATION bin)
+install (FILES "${PROJECT_BINARY_DIR}/include/TutorialConfig.h"
+         DESTINATION include)
