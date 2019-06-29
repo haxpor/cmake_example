@@ -1,8 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
-//#include <math.h>
 #include "TutorialConfig.h"
+
+#ifdef USE_MYMATH
 #include "MathFunctions.h"
+#else
+#include <math.h>
+#endif
 
 int main(int argc, char *argv[])
 {
@@ -17,8 +21,14 @@ int main(int argc, char *argv[])
   }
 
   double input_value = atof(argv[1]);
-  //double output_value = sqrt(input_value);
+#ifdef USE_MYMATH
   double output_value = mysqrt(input_value);
+  fprintf(stdout, "Use MyFunctions\n");
+#else
+  double output_value = sqrt(input_value);
+  fprintf(stdout, "Use math.h\n");
+#endif
+
   fprintf(stdout, "The square root of %g is %g\n", input_value, output_value);
   return 0;
 }

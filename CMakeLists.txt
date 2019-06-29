@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 2.6)
 project (Tutorial)
 
+# add an option to either use our MathFunctions or standard functions from math.h
+option(USE_MYMATH "Use our own implementation of math functions" OFF)
+
 # version number
 set (Tutorial_VERSION_MAJOR 1)
 set (Tutorial_VERSION_MINOR 0)
@@ -22,13 +25,25 @@ configure_file (
 # note: PROJECT_BINARY_DIR is the build directory
 include_directories("${PROJECT_BINARY_DIR}/include")
 
-# source file for mathfunctions library
-include_directories("${MATH_FUNCTIONS_INC_DIR}")
 
-# include CMakeLists.txt from a library sub-directory
-# let it build for a shared library for us
-add_subdirectory("${MATH_FUNCTIONS}")
+# conditionally add MathFunctions library if user needs it
+if (USE_MYMATH)
+  # source file for mathfunctions library
+  include_directories("${MATH_FUNCTIONS_INC_DIR}")
+
+  # include CMakeLists.txt from a library sub-directory
+  # let it build for a shared library for us
+  add_subdirectory("${MATH_FUNCTIONS}")
+
+  # add MathFunctions to linking library flags
+  set(EXTRA_LIBS ${EXTRA_LIBS} ${MATH_FUNCTIONS})
+
+  # append definition to compile flags
+  # so we don't have to set/get such value through/from config header
+  # but you can do it if you want
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DUSE_MYMATH")
+endif (USE_MYMATH)
 
 # build executable
 add_executable(Tutorial src/tutorial.cpp)
-target_link_libraries(Tutorial ${MATH_FUNCTIONS})
+target_link_libraries(Tutorial ${EXTRA_LIBS})
