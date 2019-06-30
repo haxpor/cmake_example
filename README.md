@@ -39,6 +39,10 @@ or
 cmake -DCMAKE_TOOLCHAIN_FILE=../mingwtoolchain.cmake  ..
 ```
 
+## Unit test
+
+Execute `make test` to run unit test.
+
 # Technical Note
 
 * Prevent in-source build thus you can not proceed building at project root directory, only way is to create another directory then call `cmake` from there.
